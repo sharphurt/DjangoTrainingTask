@@ -2,18 +2,18 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>Sign up</title>
+    <title>Sign in</title>
 </head>
 <body>
 <div align="center">
-    <form method="post" action="{% url 'signup' %}">
+    <form method="post" action="{% url 'signin' %}">
         {% csrf_token %}
-        <h3> Sign up </h3>
+        <h3> Sign in </h3>
         {{ form }}
-        <input type="submit">
+        <input type="submit" value="Login">
 
         {% if invalid %}
-            <p> Incorrect username, email or password. Recheck the data and try again. </p>
+            <p> Incorrect login or password. </p>
         {% endif %}
     </form>
 </div>
