@@ -26,6 +26,7 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/user_profile/templates" />
+        <option value="$MODULE_DIR$/notebook/templates" />
       </list>
     </option>
   </component>

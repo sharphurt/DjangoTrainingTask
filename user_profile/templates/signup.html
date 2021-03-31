@@ -9,11 +9,22 @@
     <form method="post" action="{% url 'signup' %}">
         {% csrf_token %}
         <h3> Sign up </h3>
-        {{ form }}
+        {% for field in form %}
+            <div class="fieldWrapper">
+                {{ field.label_tag }} {{ field }}
+                {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
         <input type="submit">
 
-        {% if invalid %}
+        {% if form.errors %}
             <p> Incorrect username, email or password. Recheck the data and try again. </p>
+        {% endif %}
+
+        {% if error %}
+            <p> {{ error }} </p>
         {% endif %}
     </form>
 </div>

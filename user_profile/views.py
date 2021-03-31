@@ -10,7 +10,7 @@ def index(request):
     if len(user) != 0:
         return render(request, 'index.html', {'user': user[0]})
     else:
-        return redirect('login')
+        return redirect('signin')
 
 
 def user_signin(request):
@@ -21,17 +21,16 @@ def user_signin(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return render(request, 'index.html', {'user': user})
-            else:
-                return render(request, 'signin.html', {'invalid': True, 'form': form})
+                return redirect('user_signin', username=username)
+        return render(request, 'signin.html', {'error': 'Incorrect login or password', 'form': form})
     else:
         form = SignInForm()
-    return render(request, 'signin.html', {'invalid': False, 'form': form})
+    return render(request, 'signin.html', {'form': form})
 
 
 def user_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('signin')
 
 
 def user_signup(request):
@@ -45,10 +44,10 @@ def user_signup(request):
             else:
                 return render(request, 'signup.html', {'error': 'A user with this data already exists', 'form': form})
         else:
-            return render(request, 'signup.html', {'error': 'Invalid input data', 'form': form})
+            return render(request, 'signup.html', {'form': form})
     else:
         form = SignUpForm()
-        return render(request, 'signup.html', {'error': None, 'form': form})
+        return render(request, 'signup.html', {'form': form})
 
 
 def register_user(request, user_data):
@@ -61,9 +60,9 @@ def register_user(request, user_data):
 
 
 def get_form_inputs(form):
-    username = form.cleaned_data['username']
-    email = form.cleaned_data['email']
-    password = form.cleaned_data['password']
+    username = form.cleaned_data['username'] if 'username' in form.cleaned_data else None
+    email = form.cleaned_data['email'] if 'email' in form.cleaned_data else None
+    password = form.cleaned_data['password'] if 'password' in form.cleaned_data else None
     return username, email, password
 
 
