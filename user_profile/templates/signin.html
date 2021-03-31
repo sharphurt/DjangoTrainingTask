@@ -10,19 +10,23 @@
         {% csrf_token %}
         <h3> Sign in </h3>
         {% for field in form %}
-            <div class="fieldWrapper">
+            <div class="fieldWrapper" style="padding-top: 5px">
                 {{ field.label_tag }} {{ field }}
                 {% if field.help_text %}
                     <p class="help">{{ field.help_text|safe }}</p>
                 {% endif %}
             </div>
         {% endfor %}
-        <input type="submit" value="Login">
-
+        <div style="padding-top: 10px">
+            <input type="submit" value="Login">
+        </div>
         {% if error %}
             <p> Incorrect login or password. </p>
         {% endif %}
     </form>
+    <div style="padding-top: 20px">
+        Still no account? <a href="signup.html">Sign up</a> for free!
+    </div>
 </div>
 </body>
 </html>
