@@ -10,10 +10,15 @@
   opacity: 1;
 }
 
+.catgirl:disabled{
+  opacity: 0.3;
+}
+
 .boost{
   height: 100px;
   width: 150px;
 }
+
 .boost-wrapper{
   display: flex;
    flex-direction: row;

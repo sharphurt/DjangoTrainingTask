@@ -9,4 +9,5 @@ urlpatterns = [
     path('click/', views.call_click, name="click"),
     path('buyBoost/', views.buy_boost, name="buyBoost"),
     path('boosts/<int:mainCycle>/', views.BoostList.as_view()),
+    path('set_maincycle/', views.set_maincycle),
 ]

@@ -7,6 +7,7 @@ class MainCycle(models.Model):
     user = models.ForeignKey(User, related_name='cycle', null=False, on_delete=models.CASCADE)
 
     coinsCount = models.IntegerField(default=0)
+    autoClickPower = models.IntegerField(default=0)
     clickPower = models.IntegerField(default=1)
     level = models.IntegerField(default=0)
 
@@ -17,7 +18,10 @@ class MainCycle(models.Model):
     def check_level(self):
         if(self.coinsCount > (self.level**2 + 1) * 1000):
             self.level += 1
-            boost = Boost(mainCycle = self, level = self.level)
+            boost_type = 1
+            if self.level % 3 == 0:
+                boost_type = 0
+            boost = Boost(mainCycle = self, boost_type=boost_type, level = self.level)
             boost.save()
             return True
         return False
@@ -28,14 +32,23 @@ class Boost(models.Model):
     level = models.IntegerField(null=False)
     power = models.IntegerField(default=1)
     price = models.IntegerField(default=10)
+    boost_type = models.IntegerField(default=1)
 
     def upgrade(self):
-        self.mainCycle.clickPower += self.power
         self.mainCycle.coinsCount -= self.price
-        self.mainCycle.save()
+        if self.boost_type == 1:
+            self.mainCycle.clickPower += self.power
+            self.price *= 5
+        else:
+            self.mainCycle.autoClickPower += self.power
+            self.price *= 10
         self.power *= 2
-        self.price *= 2
-        return (self.mainCycle.clickPower,
+        self.mainCycle.save()
+        return (self.mainCycle,
                 self.level,
                 self.price,
                 self.power)
+
+    def update_coins_count(self, current_coins_count):
+        self.mainCycle.coinsCount += current_coins_count
+        return self.mainCycle
