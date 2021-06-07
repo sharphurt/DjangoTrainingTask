@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user_profile', '0003_maincycle_autoclickpower'),
+        ('backend', '0003_maincycle_autoclickpower'),
     ]
 
     operations = [

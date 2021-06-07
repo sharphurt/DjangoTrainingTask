@@ -1,13 +1,12 @@
 async function callClick(){
-  let response = await fetch('/click/',{
-    method: 'GET'
-  });
-  let answer = await response.json();
-  document.getElementById("data").innerHTML = answer.coinsCount;
-  if (answer.boosts)
-    render_all_boosts(answer.boosts);
-    set_all_boosts_availability()
+  const coins_counter = document.getElementById('data')
+  let coins_value = parseInt(coins_counter.innerText)
+  const click_power = document.getElementById('click_power').innerText
+  coins_value += parseInt(click_power)
+  document.getElementById("data").innerHTML = coins_value
+  set_all_boosts_availability()
 }
+
 
 async function getUser(id){
   let response = await fetch('/users/' + id,{
@@ -20,8 +19,9 @@ async function getUser(id){
     method: 'GET'
   });
   let cycle = await getCycle.json();
-  document.getElementById("data").innerHTML = cycle['coinsCount'];
-  document.getElementById("clickPower").innerHTML = cycle['clickPower'];
+  document.getElementById("data").innerHTML = cycle['coins_count'];
+  document.getElementById("click_power").innerHTML = cycle['click_power'];
+  document.getElementById("auto_click_power").innerHTML = cycle['auto_click_power'];
   let boost_request = await fetch('/boosts/' + answer.cycle, {
     method :'GET'
   })
@@ -37,7 +37,7 @@ function buyBoost(boost_level) {
 
     const csrftoken = getCookie('csrftoken')
 
-    fetch('/buyBoost/', {
+    fetch('/buy_boost/', {
         method: 'POST',
         headers: {
             "X-CSRFToken": csrftoken,
@@ -53,16 +53,17 @@ function buyBoost(boost_level) {
             return Promise.reject(response)
         }
     }).then(data => {
-        document.getElementById("data").innerHTML = data['coinsCount'];
-        document.getElementById("clickPower").innerHTML = data['clickPower'];
-        document.getElementById("autoClickPower").innerHTML = data['autoClickPower'];
+        document.getElementById("data").innerHTML = data['coins_count'];
+        document.getElementById("click_power").innerHTML = data['click_power'];
+        document.getElementById("auto_click_power").innerHTML = data['auto_click_power'];
         var boost = document.getElementById(`boost-holder-${data['level']}`)
-        boost.querySelector("#boostPower").innerHTML = data['clickPower'];
+        boost.querySelector("#boostPower").innerHTML = data['click_power'];
         boost.querySelector("#boostLevel").innerHTML = data['level'];
         boost.querySelector("#boostPrice").innerHTML = data['price'];
+        set_all_boosts_availability()
     })
-    set_all_boosts_availability()
 }
+
 
 function render_all_boosts(boosts){
   let parent = document.getElementById('boost-wrapper')
@@ -71,6 +72,7 @@ function render_all_boosts(boosts){
     render_boost(parent, boost)
   })
 }
+
 
 function render_boost(parent, boost){
   const div = document.createElement('div')
@@ -87,6 +89,7 @@ function render_boost(parent, boost){
   parent.appendChild(div)
 }
 
+
 function set_all_boosts_availability() {
     const counter = document.getElementById('data')
     const boosts = document.getElementsByClassName('boost-holder')
@@ -96,8 +99,8 @@ function set_all_boosts_availability() {
     }
 }
 
-function set_boost_availability(coins, boost) {
 
+function set_boost_availability(coins, boost) {
     const price = boost.querySelector("#boostPrice").innerHTML
     if (parseInt(price) > parseInt(coins)) {
         var bttn = boost.querySelector("#buy")
@@ -114,9 +117,8 @@ function set_auto_click() {
         const coins_counter = document.getElementById('data')
         let coins_value = parseInt(coins_counter.innerText)
 
-        const auto_click_power = document.getElementById('autoClickPower').innerText
+        const auto_click_power = document.getElementById('auto_click_power').innerText
         coins_value += parseInt(auto_click_power)
-        // coins_counter.innerText = coins_value
         document.getElementById("data").innerHTML = coins_value;
     }, 1000)
 }
@@ -143,14 +145,14 @@ function set_send_coins_interval() {
         const csrftoken = getCookie('csrftoken')
         const coins_counter = document.getElementById('data').innerText
 
-        fetch('/set_maincycle/', {
+        fetch('/set_main_cycle/', {
             method: 'POST',
             headers: {
                 "X-CSRFToken": csrftoken,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                coinsCount: coins_counter,
+                coins_count: coins_counter,
             })
         }).then(response => {
             if (response.ok) {
@@ -159,8 +161,10 @@ function set_send_coins_interval() {
                 return Promise.reject(response)
             }
         }).then(data => {
-            console.log('Coins count sended to server')
+            if (data.boosts)
+              render_all_boosts(data.boosts)
             set_all_boosts_availability()
         }).catch(err => console.log(err))
+
     }, 10000)
 }

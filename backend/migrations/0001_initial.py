@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('power', models.IntegerField(default=1)),
                 ('price', models.IntegerField(default=10)),
-                ('mainCycle', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='boosts', to='user_profile.maincycle')),
+                ('mainCycle', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='boosts', to='backend.maincycle')),
             ],
         ),
     ]

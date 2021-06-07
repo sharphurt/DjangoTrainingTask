@@ -12,46 +12,42 @@ class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
 class CycleList(generics.ListAPIView):
     queryset = MainCycle.objects.all()
     serializer_class = CycleSerializer
+
 
 class BoostList(generics.ListAPIView):
     queryset = Boost
     serializer_class = BoostSerializer
     def get_queryset(self):
-        return Boost.objects.filter(mainCycle=self.kwargs['mainCycle'])
+        return Boost.objects.filter(main_cycle=self.kwargs['main_cycle'])
+
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializerDetail
+
 
 class CycleDetail(generics.RetrieveAPIView):
     queryset = MainCycle.objects.all()
     serializer_class = CycleSerializerDetail
 
 
-
-@api_view(['GET'])
-def call_click(request):
-    data = services.clicker_services.call_click(request)
-    return Response(data)
-
 @api_view(['POST'])
-def buy_boost(request):
-    main_cycle, level, price, power = services.clicker_services.buy_boost(request)
-    return Response({'clickPower': main_cycle.clickPower,
-                     'coinsCount': main_cycle.coinsCount,
-                     'autoClickPower': main_cycle.autoClickPower,
+def upgrade_boost(request):
+    main_cycle, level, price, power = services.clicker_services.upgrade_boost(request)
+    return Response({'click_power': main_cycle.click_power,
+                     'coins_count': main_cycle.coins_count,
+                     'auto_click_power': main_cycle.auto_click_power,
                      'level': level,
                      'price': price,
                      'power': power})
 
+
 @api_view(['POST'])
-def set_maincycle(request):
-    user = request.user
-    data = request.data
-    MainCycle.objects.filter(user=user).update(
-        coinsCount=data['coinsCount']
-    )
-    return Response({'success': 'ok'})
+def set_main_cycle(request):
+    coins_count, boosts = services.clicker_services.set_main_cycle(request)
+    return Response({"coins_count": coins_count,
+                     "boosts": boosts})

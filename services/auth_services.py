@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from user_profile.models import MainCycle
-from user_profile.forms import UserForm
+from backend.models import MainCycle
+from backend.forms import UserForm
 
 
 def user_login(request):
@@ -26,9 +26,9 @@ def user_registration(request):
         form = UserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            mainCycle = MainCycle()
-            mainCycle.user = user
-            mainCycle.save()
+            main_cycle = MainCycle(user = user)
+            main_cycle.save()
+            first_boost = Boost(main_cycle=main_cycle, level=0)
             user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
             login(request, user)
             return (True, 'index', {})
