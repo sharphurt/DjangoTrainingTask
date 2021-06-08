@@ -1,28 +1,46 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
+    <script>
+        var staticImagesUrl = "{% static 'images/' %}"
+    </script>
     <script src="{% static 'js/index.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta charset="utf-8">
     <div>
-      <title >Title </title>
+        <title>Title </title>
     </div>
-  </head>
-  <body onload="getUser({{user.id}})">
-     <main>
+</head>
+<body onload="getUser({{ user.id }})">
+<main>
 
-      <div align='center'>
-        <h3> Welcome, <div id="user">%user%<div/>! </h3>
-        <div class="logout"><a href="/logout">LOGOUT</a></div>
-        <h3>You have <div id="data">%coins%</div> coins </h3>
-        <h3> Your click power is <div id="click_power">%clickPower%</div> </h3>
-        <h3> Your auto click power is <div id="auto_click_power"> {{mainCycle.autoClickPower}} </div> coins per second </h3>
-        <input type="image" class="catgirl" src="{% static 'images/catgirl.png' %}" onclick="callClick()" />
+    <div align='center'>
+        <div class="profile">
+            <div> Привет,
+                <div id="user">%user%</div>
+                !
+                <div class="logout"><a href="/logout">Выйти отсюда!</a></div>
+            </div>
+
+        </div>
+        <div class="clicker">
+            <h3>Обэму ударили
+                <div style="display: inline" id="data">%coins%</div>
+                раз. Но Боря живой!
+            </h3>
+            <h3> Сила удара:
+                <div style="display: inline" id="click_power">%clickPower%</div>
+            </h3>
+            <h3> Количество ядерных ударов по америке в секунду:
+                <div style="display: inline" id="auto_click_power"> {{ mainCycle.autoClickPower }} </div>
+            </h3>
+            <input type="image" class="catgirl borya" src="{% static 'images/catgirl.png' %}" onclick="callClick()"/>
+        </div>
         <div class="boost-wrapper" id="boost-wrapper">
         </div>
-      </div>
+    </div>
 
-    </main>
-  </body>
+</main>
+</body>
 </html>

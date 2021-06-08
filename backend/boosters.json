@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Кикбоксер",
+    "description": "Увеличивает силу твоего удара по америке",
+    "powerIncreaseCoefficient": 1.5,
+    "price": 100,
+    "priceIncreaseCoefficient": 1.1,
+    "availableFromLevel": 1,
+    "type": 0,
+    "state": 0
+  },
+  {
+    "name": "Гопари с района",
+    "description": "Обэме автоматически начинает прилетать за базар",
+    "powerIncreaseCoefficient": 1.5,
+    "price": 300,
+    "priceIncreaseCoefficient": 1.1,
+    "availableFromLevel": 2,
+    "type": 1,
+    "state": 0
+  }
+]

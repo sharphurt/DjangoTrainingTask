@@ -1,38 +1,129 @@
-.catgirl{
-  opacity: 0.7;
+body {
+    font-family: sans-serif;
 }
 
-.catgirl:hover{
-  opacity: 0.8;
+.catgirl {
+    opacity: 0.7;
 }
 
-.catgirl:active{
-  opacity: 1;
+.borya {
+    cursor: url("https://learn.urfu.ru/upload/files/personal-folders/113308/cursor.png"), auto;
+    width: 500px;
+    height: 500px;
 }
 
-.catgirl:disabled{
-  opacity: 0.3;
+.catgirl:hover {
+    opacity: 0.8;
 }
 
-.boost{
-  height: 100px;
-  width: 150px;
+.catgirl:active {
+    opacity: 1;
 }
 
-.boost-wrapper{
-  display: flex;
-   flex-direction: row;
-   flex: 1;
-   flex-wrap: wrap
+.catgirl:disabled {
+    opacity: 0.3;
 }
 
-.boost-holder{
-  width: 200px;
-  height: 200px;
-  background: burlywood;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
+
+.boost-wrapper {
+    float: left;
+    overflow-y: scroll;
+    background: lightblue;
+}
+
+.boost-wrapper, .clicker {
+    width: 100vh;
+    height: 95vh;
+}
+
+#boostLevel, #boostPrice, #boostPower {
+    display: inline;
+}
+
+.boost-holder {
+    width: 100%;
+    height: 100%;
+}
+
+.boost {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    font-family: sans-serif;
+    font-size: 24px;
+}
+
+
+.name-info {
+    float: left;
+}
+
+.boost-info {
+    position: relative;
+    margin: 0 150px;
+    text-align: left;
+}
+
+
+.name {
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 25px;
+}
+
+.price {
+    position: absolute;
+    right: 0;
+    margin-top: 25px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+
+.description {
+    font-size: 18px;
+}
+
+
+.boost-info::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.boost-button {
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+
+
+.boost-type-0 {
+    background: bisque;
+}
+
+/*https://learn.urfu.ru/upload/files/personal-folders/113308/cursor.png*/
+
+.boost-type-1 {
+    background: cornflowerblue;
+}
+
+.boost-state-0 {
+    background: black;
+    color: aliceblue;
+}
+
+.clicker {
+    float: right;
+    background: lightsalmon;
+
+}
+
+#user, .logout {
+    display: inline;
+}
+
+.profile {
+    position: sticky;
 }
