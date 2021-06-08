@@ -12,6 +12,8 @@ function callClick() {
 
 function callAutoClick() {
     cycle['coins_count'] += 1
+    const debt = document.getElementById("usa-debt").innerHTML;
+    document.getElementById("usa-debt").innerHTML = (parseInt(debt) + 1).toString()
     drawCycle()
     setAllBoostsAvailability()
 }
@@ -108,7 +110,7 @@ function getInnerHTML(boost) {
                 <div class="price" id="boostPrice"> ${boost.price} </div>
             </div>
         </div>`.replace('src=""', 'src="' + staticImagesUrl + `${boost.name}.jpg"`)
-        : `<div id="boost-holder-${boost.id}"> тут типа плейсхолдер для буста, который еше</div>`;
+        : `<div id="boost-holder-${boost.id}"> тут типа плейсхолдер для буста, который еще не разблокирован</div>`;
 }
 
 
